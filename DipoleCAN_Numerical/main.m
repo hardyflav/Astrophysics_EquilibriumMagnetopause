@@ -42,7 +42,7 @@ addpath(p)
     
 %% Ploting the Results
     PlotsPossibilitiesCorrection= ["SurfaceCorrected", "SurfaceCorrectedFieldLines", "GridWrapped", "GridWrappedFieldLines"];
-    PlotsCorrection = ["SurfaceCorrected", "GridWrapped"];
+    PlotsCorrection = ["GridWrapped"];
     CorrectionPlot(PlotsCorrection, DeltaThetaDeg, DeltaPhiDeg, ThetaMaxDeg, PhiMaxDeg, rSubSolarNose, SurfaceCorrected, SystemParameters)
 
     

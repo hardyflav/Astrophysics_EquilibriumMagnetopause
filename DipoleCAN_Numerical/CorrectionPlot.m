@@ -199,6 +199,8 @@ end
 
 if ismember("GridWrapped", Plots)
     
+    Jump = 2;
+    
     [NbPointsGrid, NbPointsGridInside,      ...
     NbPointsThetaInside, NbPointsPhiInside, ...
     ThetaSpanVector, PhiSpanVector]         = GridDetails(ThetaMaxDeg, PhiMaxDeg, DeltaThetaDeg, DeltaPhiDeg);
@@ -212,7 +214,7 @@ if ismember("GridWrapped", Plots)
     PB_Assessment = F_values_Numerical(rTotalSurface, rBottom, rTop, rSubSolarNose, ThetaMaxDeg, PhiMaxDeg, DeltaThetaDeg, DeltaPhiDeg, NbPointsGridInside, SystemParameters);
     ErrorVector = log10(abs(PB_Assessment));
     ErrorGrid = reshape(ErrorVector, NbPointsPhiInside, NbPointsThetaInside);
-    pcolor(ErrorGrid(:, 2:2:end));
+    pcolor(ErrorGrid(:, Jump:Jump:end));
     shading flat
         caxis([-4 0])
         axes = gca;
@@ -231,7 +233,6 @@ if ismember("GridWrapped", Plots)
         export_fig ColourMap.png
     close()
         
-%     figure;
     hold on
 
     % Ring
@@ -288,7 +289,7 @@ if ismember("GridWrapped", Plots)
 
             ImgRGB = imread('ColourMap.png');
             [ImRows, ImCols, ImPlanes] = size(ImgRGB);
-            ConstructionSurfaceWarp(SurfaceCorrected(:,2:2:end).', ThetaSpanConcatenated(2:2:end), PhiSpanConcatenated(1:1:end), ImgRGB)
+            ConstructionSurfaceWarp(SurfaceCorrected(:,Jump:Jump:end).', ThetaSpanConcatenated(Jump:Jump:end), PhiSpanConcatenated(1:1:end), ImgRGB)
             set(gcf,'color','w');
             view([45+3*90+5 30])
             axis([-2.3, 2.3, -2.3, 2.3, -2.3, 2.3])
@@ -314,10 +315,10 @@ end
 % + Field lines
 
 if ismember("GridWrappedFieldLines", Plots)
-
-  
     
-  [NbPointsGrid, NbPointsGridInside,      ...
+    Jump = 2;
+    
+    [NbPointsGrid, NbPointsGridInside,      ...
     NbPointsThetaInside, NbPointsPhiInside, ...
     ThetaSpanVector, PhiSpanVector]         = GridDetails(ThetaMaxDeg, PhiMaxDeg, DeltaThetaDeg, DeltaPhiDeg);
     
@@ -330,7 +331,7 @@ if ismember("GridWrappedFieldLines", Plots)
     PB_Assessment = F_values_Numerical(rTotalSurface, rBottom, rTop, rSubSolarNose, ThetaMaxDeg, PhiMaxDeg, DeltaThetaDeg, DeltaPhiDeg, NbPointsGridInside, SystemParameters);
     ErrorVector = log10(abs(PB_Assessment));
     ErrorGrid = reshape(ErrorVector, NbPointsPhiInside, NbPointsThetaInside);
-    pcolor(ErrorGrid);
+    pcolor(ErrorGrid(:, Jump:Jump:end));
     shading flat
         caxis([-4 0])
         axes = gca;
@@ -349,7 +350,6 @@ if ismember("GridWrappedFieldLines", Plots)
         export_fig ColourMap.png
     close()
         
-%     figure;
     hold on
     
     % L-Shells
@@ -400,37 +400,43 @@ if ismember("GridWrappedFieldLines", Plots)
         yout = rout*sin(t);
         z1 = -D;
         z2 = D;
-
+        Opacity = 0.2;
         bottom = patch(center(1)+[xout,xin], ...
                    center(2)+[yout,yin], ...
-                   z1*ones(1,2*length(xout)),'', 'FaceAlpha', 0.5, 'LineStyle', 'none');
+                   z1*ones(1,2*length(xout)),'', 'FaceAlpha', Opacity, 'LineStyle', 'none');
         top = patch(center(1)+[xout,xin], ...
                 center(2)+[yout,yin], ...
-                z2*ones(1,2*length(xout)),'', 'FaceAlpha', 0.5, 'LineStyle', 'none');
+                z2*ones(1,2*length(xout)),'', 'FaceAlpha', Opacity, 'LineStyle', 'none');
         [X,Y,Z] = cylinder(1,length(xin));
         outer = surf(rout*X+center(1), ...
                  rout*Y+center(2), ...
-                 Z*(z2-z1)+z1, 'FaceAlpha', 0.5, 'LineStyle', 'none');
+                 Z*(z2-z1)+z1, 'FaceColor', 'blue', 'FaceAlpha', 0.1, 'LineStyle', 'none');
         inner = surf(rin*X+center(1), ...
                  rin*Y+center(2), ...
-                 Z*(z2-z1)+z1, 'FaceAlpha', 0.5, 'LineStyle', 'none');
+                 Z*(z2-z1)+z1, 'FaceColor', 'blue', 'FaceAlpha', 0.1, 'LineStyle', 'none');
 
         PhiSpanConcatenated = (0:DeltaPhiDeg:PhiMaxDeg)*pi/180;
         ThetaSpanConcatenated = (0:DeltaThetaDeg:ThetaMaxDeg)*pi/180;
 
             ImgRGB = imread('ColourMap.png');
             [ImRows, ImCols, ImPlanes] = size(ImgRGB);
-            ConstructionSurfaceWarp(SurfaceCorrected.', ThetaSpanConcatenated, PhiSpanConcatenated, ImgRGB)
+            ConstructionSurfaceWarp(SurfaceCorrected(:,Jump:Jump:end).', ThetaSpanConcatenated(Jump:Jump:end), PhiSpanConcatenated(1:1:end), ImgRGB)
             set(gcf,'color','w');
-            colorbar('southoutside', 'YTickLabel', {'0.01', '', '0.1', '', '1', '', '10', '', '100'});
-            caxis([-4 0])
-            view([45+90+5 30])
+            view([45+3*90+5 30])
             axis([-2.3, 2.3, -2.3, 2.3, -2.3, 2.3])
             box on
             grid on
 
+        caxis([-4 0])
+        cb = colorbar('eastoutside', 'YTickLabel', {'0.01', '', '0.1', '', '1', '', '10', '', '100'}, 'LineWidth', 1, 'FontName' , 'Helvetica', 'FontSize', 15);
+        
+        % Optional colorbar positioning for publications
+%         cbPosition = cb.Position;
+%         ZStretch = 0.8;
+%         set(cb, 'Position', [cbPosition(1)*0.99 cbPosition(2)+(cbPosition(4)*(1-ZStretch))/2 cbPosition(3) cbPosition(4)*ZStretch])
+            
 	hold off
-
+    
 end
 
 
