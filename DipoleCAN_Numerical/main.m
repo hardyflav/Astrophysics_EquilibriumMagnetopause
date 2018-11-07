@@ -1,6 +1,6 @@
 clear all;
 clc;
-p = genpath('/Users/flavien/Documents/Github/EquilibriumMagnetopause');
+p = genpath('/Users/flavien/Documents/Github/EquilibriumMagnetopause/DipoleCAN_Numerical');
 addpath(p)
 
 
