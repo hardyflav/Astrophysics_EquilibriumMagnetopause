@@ -9,7 +9,7 @@ addpath(p)
     SystemParameters = SystemParameters(Planet);
 
 
-%% Grid Definition for Surface optimisations
+%% Grid Definition for Surface Optimisations
     ThetaMaxDeg = 120;                             % Maximum value of theta on the grid, degrees
     PhiMaxDeg = 90;                                % Maximum value of phi on the grid, degrees
     DeltaThetaDeg = 2;
@@ -21,7 +21,7 @@ addpath(p)
     ThetaSpanVector, PhiSpanVector]         = GridDetails(ThetaMaxDeg, PhiMaxDeg, DeltaThetaDeg, DeltaPhiDeg);
 
 
-%% Construction of the initial surface
+%% Construction of the Initial Surface
     PlotsPossibilitiesInitial = ["CurveEquator", "CurveMeridianParts", "CurveMeridian", "SurfaceInitialTot", "SurfaceInitialTotFieldLines", "GridAnalysis", "GridWrapped", "GridWrappedFieldLines"];
     Plots =["CurveEquator", "CurveMeridian", "GridWrapped"];
     [rSubSolarNose, rEquatorInterpolant, rMeridianInterpolant, ThetaCuspCurves, InitialSurfaceInterpolant] = InitialGuess(SystemParameters, ThetaMaxDeg, PhiMaxDeg, DeltaThetaDeg, DeltaPhiDeg, Plots);
@@ -34,13 +34,13 @@ addpath(p)
     ThetaCusp = ThetaCuspCurves - mod(ThetaCuspCurves, DeltaThetaDeg);
 
 
-%% Cropping and Correcting the initial surface
+%% Cropping and Correcting the Initial Surface
     NumIterationsTop = 15;
     NumIterationsBottom = 15;
     [SurfaceCorrected] = Correction(rSubSolarNose, DeltaThetaDeg, DeltaPhiDeg, ThetaCusp, ThetaMaxDeg, PhiMaxDeg, rEquator, rMeridian, SurfaceInitialTot, NumIterationsTop, NumIterationsBottom, SystemParameters);
 
     
-%% Ploting the results
+%% Ploting the Results
     PlotsPossibilitiesCorrection= ["SurfaceCorrected", "SurfaceCorrectedFieldLines", "GridWrapped", "GridWrappedFieldLines"];
     PlotsCorrection = ["GridWrapped"];
     CorrectionPlot(PlotsCorrection, DeltaThetaDeg, DeltaPhiDeg, ThetaMaxDeg, PhiMaxDeg, rSubSolarNose, SurfaceCorrected, SystemParameters)
