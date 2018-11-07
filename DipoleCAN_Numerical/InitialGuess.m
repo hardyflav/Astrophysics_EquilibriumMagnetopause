@@ -300,7 +300,7 @@ function [rSubSolarNose, rEquatorInterpolant, rMeridianInterpolant, ThetaCusp, I
 if ismember("CurveEquator", Plots)
     
     figure;
-    title('Solution in the equatorial plane')
+%     title('Solution in the equatorial plane')
     hold on
     
         % Curve
@@ -399,7 +399,7 @@ end
 if ismember("CurveMeridianParts", Plots)
 
     figure;
-    title('Piece-wise solution in the noon-midnight meridian plane')
+%     title('Piece-wise solution in the noon-midnight meridian plane')
     hold on
     
         % Curves
@@ -835,6 +835,7 @@ rMeridianGrid = rMeridianInterpolant(ThetaSpanGrid);
     NbPointsThetaInside, NbPointsPhiInside, ...
     ~, ~]         = GridDetails(ThetaMaxDeg, PhiMaxDeg, DeltaThetaGridDeg, DeltaPhiGridDeg);
 
+    % Texture
     figure;
     FValuesGridInsideVector = F_values_Numerical(rGuess, rEquatorGrid, rMeridianGrid, rSubSolarNose, ThetaMaxDeg, PhiMaxDeg, DeltaThetaGridDeg, DeltaPhiGridDeg, NbPointsGridInside, SystemParameters);
     FValuesGridInside = reshape(FValuesGridInsideVector,[NbPointsPhiInside, NbPointsThetaInside]);
@@ -857,8 +858,8 @@ rMeridianGrid = rMeridianInterpolant(ThetaSpanGrid);
         export_fig ColourMap.png
     close();
 
-    figure;
-    title('Absolute PB assessment projected onto the initial surface')  
+    f = figure;
+%     title('Absolute PB assessment projected onto the initial surface')  
     
    hold on
 
@@ -896,66 +897,38 @@ rMeridianGrid = rMeridianInterpolant(ThetaSpanGrid);
         yout = rout*sin(t);
         z1 = -D;
         z2 = D;
-
+        Opacity = 0.2;
         bottom = patch(center(1)+[xout,xin], ...
                    center(2)+[yout,yin], ...
-                   z1*ones(1,2*length(xout)),'', 'FaceAlpha', 0.5, 'LineStyle', 'none');
+                   z1*ones(1,2*length(xout)),'', 'FaceAlpha', Opacity, 'LineStyle', 'none');
         top = patch(center(1)+[xout,xin], ...
                 center(2)+[yout,yin], ...
-                z2*ones(1,2*length(xout)),'', 'FaceAlpha', 0.5, 'LineStyle', 'none');
+                z2*ones(1,2*length(xout)),'', 'FaceAlpha', Opacity, 'LineStyle', 'none');
         [X,Y,Z] = cylinder(1,length(xin));
         outer = surf(rout*X+center(1), ...
                  rout*Y+center(2), ...
-                 Z*(z2-z1)+z1, 'FaceAlpha', 0.5, 'LineStyle', 'none');
+                 Z*(z2-z1)+z1,'FaceColor', 'blue', 'FaceAlpha', 0.1, 'LineStyle', 'none');
         inner = surf(rin*X+center(1), ...
                  rin*Y+center(2), ...
-                 Z*(z2-z1)+z1, 'FaceAlpha', 0.5, 'LineStyle', 'none');        
-             
-             
-             ImgRGB = imread('ColourMap.png');
-            [ImRows, ImCols, ImPlanes] = size(ImgRGB);
-            ConstructionSurfaceWarp(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, ImgRGB)
-            set(gcf,'color','w');
-            colorbar('southoutside', 'YTickLabel', {'0.01', '', '0.1', '', '1', '', '10', '', '100'});
-            caxis([-4 0])
-            view([45+90+5 30])
-            axis([-2.3, 2.3, -2.3, 2.3, -2.3, 2.3])
-            box on
-            grid on
+                 Z*(z2-z1)+z1, 'FaceColor', 'blue', 'FaceAlpha', 0.1, 'LineStyle', 'none');        
+
+        % Surface
+        ImgRGB = imread('ColourMap.png');
+        ConstructionSurfaceWarp(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, ImgRGB);
+        set(gcf,'color','w');
+        view([45+3*90+5 30])
+        axis([-2.3, 2.3, -2.3, 2.3, -2.3, 2.3])
+        box on
+        grid on
         
-  % Axes at the origin
-        plot3(get(gca,'XLim'),[0 0],[0 0],'k');
-        plot3([0 0],[0 0],get(gca,'ZLim'),'k');
-        plot3([0 0],get(gca,'YLim'),[0 0],'k');
-        % GET TICKS
-        X=get(gca,'Xtick');
-        Y=get(gca,'Ytick');
-        Z=get(gca,'Ztick');
-        % GET LABELS
-        XL=get(gca,'XtickLabel');
-        YL=get(gca,'YtickLabel');
-        ZL=get(gca,'ZtickLabel');
-        % REMOVE TICKS
-        set(gca,'Xtick',[]);
-        set(gca,'Ytick',[]);
-        set(gca,'Ztick',[]);
-        % GET OFFSETS
-        Xoff=diff(get(gca,'XLim'))./30;
-        Yoff=diff(get(gca,'YLim'))./30;
-        Zoff=diff(get(gca,'ZLim'))./30;
-        % DRAW TICKS
-        %%%%%%% THIS COULD BE VECTORiZeD %%%%%%%
-        for i=1:length(X)
-           plot3([X(i) X(i)],[0 0],[-Zoff Zoff],'k');
-        end
-        for i=1:length(Y)
-           plot3([-Xoff Xoff],[Y(i) Y(i)],[0 0],'k');
-        end
-        for i=1:length(Z)
-           plot3([-Xoff Xoff],[0 0],[Z(i) Z(i)],'k');
-        end
+        caxis([-4 0])
+        cb = colorbar('eastoutside', 'YTickLabel', {'0.01', '', '0.1', '', '1', '', '10', '', '100'}, 'LineWidth', 1, 'FontName' , 'Helvetica', 'FontSize', 15);
         
-        
+        % Optional colorbar positioning for publications
+%         cbPosition = cb.Position;
+%         ZStretch = 0.8;
+%         set(cb, 'Position', [cbPosition(1)*0.99 cbPosition(2)+(cbPosition(4)*(1-ZStretch))/2 cbPosition(3) cbPosition(4)*ZStretch])
+            
     hold off
     
     
