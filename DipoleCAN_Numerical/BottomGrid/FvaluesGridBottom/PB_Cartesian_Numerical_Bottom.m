@@ -2,7 +2,8 @@ function [PB_Cartesian_Numerical_Bottom] = PB_Cartesian_Numerical_Bottom( k, rk,
     
     beta = SystemParameters.beta;
     M = SystemParameters.M;
-    
+    mu0I = SystemParameters.mu0I;
+
     Nb_points_theta = size(r_eq, 1);    % Number of points on each direction of the grid, from ThetaLeftBoundaryDeg to Max_deg_equ
     N_theta = Nb_points_theta-2; % Number of points on theta-direction of the grid, from 1 to Max_deg_equ-1
 
@@ -198,8 +199,12 @@ function [PB_Cartesian_Numerical_Bottom] = PB_Cartesian_Numerical_Bottom( k, rk,
         
     end
     
-    BDisk_Cartesian = B_CAN_Cartesian(SystemParameters, rk, theta_vec(k), phi_vec(k)).';
-    Btot = BDipole_Cartesian + BDisk_Cartesian;
+    if mu0I == 0
+        Btot = BDipole_Cartesian;
+    else
+        BDisk_Cartesian = B_CAN_Cartesian(SystemParameters, rk, theta_vec(k), phi_vec(k)).';
+        Btot = BDipole_Cartesian + BDisk_Cartesian;
+    end
     
     PressureDifference = norm(cross(n_Cartesian, Btot))*sqrt(1+beta) + (1/2)*dot(n_Cartesian,v_Cartesian);
     MeanPressure = (1/2) * (norm(cross(n_Cartesian, Btot))*sqrt(1+beta) - (1/2)*dot(n_Cartesian,v_Cartesian));

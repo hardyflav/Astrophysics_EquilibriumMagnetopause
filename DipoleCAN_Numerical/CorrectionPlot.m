@@ -199,7 +199,7 @@ end
 
 if ismember("GridWrapped", Plots)
     
-    Jump = 2;
+    Jump = 3;
     
     [NbPointsGrid, NbPointsGridInside,      ...
     NbPointsThetaInside, NbPointsPhiInside, ...
@@ -299,11 +299,11 @@ if ismember("GridWrapped", Plots)
         caxis([-4 0])
         cb = colorbar('eastoutside', 'YTickLabel', {'0.01', '', '0.1', '', '1', '', '10', '', '100'}, 'LineWidth', 1, 'FontName' , 'Helvetica', 'FontSize', 15);
         
-        % Optional colorbar positioning for publications
+% %         Optional colorbar positioning for publications
 %         cbPosition = cb.Position;
 %         ZStretch = 0.8;
 %         set(cb, 'Position', [cbPosition(1)*0.99 cbPosition(2)+(cbPosition(4)*(1-ZStretch))/2 cbPosition(3) cbPosition(4)*ZStretch])
-            
+%             
 	hold off
     
 end

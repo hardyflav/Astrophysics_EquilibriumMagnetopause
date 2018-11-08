@@ -45,10 +45,9 @@ function [SurfaceCorrected] = Correction(rSubSolarNose, DeltaThetaDeg, DeltaPhiD
 
 %% Correcting sub-solar cap
     epsilon = 1.e-10;
-    NumIterations = 15;
 
     opts = optimoptions('fsolve','algorithm','Levenberg-Marquardt', 'Display', 'iter');
-    opts.MaxIterations = NumIterations;
+    opts.MaxIterations = NumIterationsTop;
     opts.MaxFunEvals = 100;
     opts.SpecifyObjectiveGradient = true;
     opts.CheckGradients = false;
@@ -125,7 +124,6 @@ function [SurfaceCorrected] = Correction(rSubSolarNose, DeltaThetaDeg, DeltaPhiD
     NbPointsPhiBottomInside = size(BottomGrid, 1);
     NbPointsThetaBottomInside = size(BottomGrid, 2);
 
-    NumIterationsBottom = 15;
     opts = optimoptions('fsolve','algorithm','Levenberg-Marquardt', 'Display', 'iter');
     opts.MaxIterations = NumIterationsBottom;
     opts.MaxFunEvals = 100000;

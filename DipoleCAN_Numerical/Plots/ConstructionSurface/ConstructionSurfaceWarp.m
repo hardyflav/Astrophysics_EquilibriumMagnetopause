@@ -80,10 +80,31 @@ hold on
                                     'LineStyle', "-.");
                                 
                                 
- hold off   
  
+ %% OPTIONAL: Plot contours
+% 
+% % For corrected surface -> Add contours
+%     Opacity = 0.5;
+%     Delta = 5;
+%     ContourColor = [0.5020    0.5020    0.5020];
+%     for k = 1:Delta:size(theta_span, 2)
+% 
+%         Xc = X(k, :);
+%         Yc = Y(k, :);
+%         Zc = Z(k,:);
+%         p1 = plot3(Zc, Xc, Yc, 'LineStyle', '-', 'Color', ContourColor, 'LineWidth', 0.5);
+%         p2 = plot3(Zc, -Xc, Yc, 'LineStyle', '-', 'Color', ContourColor, 'LineWidth', 0.5);
+%         p3 = plot3(Zc, Xc, -Yc, 'LineStyle', '-', 'Color', ContourColor, 'LineWidth', 0.5);
+%         p4 = plot3(Zc, -Xc, -Yc, 'LineStyle', '-', 'Color', ContourColor, 'LineWidth', 0.5);
+% 
+%         p1.Color(4) = Opacity;
+%         p2.Color(4) = Opacity;
+%         p3.Color(4) = Opacity;
+%         p4.Color(4) = Opacity;
+% 
+%     end
     
-    
+ hold off   
 
 end
 

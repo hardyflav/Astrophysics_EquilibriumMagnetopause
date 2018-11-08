@@ -2,6 +2,7 @@ function [PB_Cartesian_Numerical] = PB_Cartesian_Numerical( k, rk, rkp1, rkm1, r
     
     beta = SystemParameters.beta;
     M = SystemParameters.M;
+    mu0I = SystemParameters.mu0I;
     
     [~, ~,...
     N_theta, N_phi,...
@@ -175,8 +176,12 @@ function [PB_Cartesian_Numerical] = PB_Cartesian_Numerical( k, rk, rkp1, rkm1, r
         
     end
     
-    BDisk_Cartesian = B_CAN_Cartesian(SystemParameters, rk, theta_vec(k), phi_vec(k)).';
-    Btot = BDipole_Cartesian + BDisk_Cartesian;
+    if mu0I == 0
+        Btot = BDipole_Cartesian;
+    else
+        BDisk_Cartesian = B_CAN_Cartesian(SystemParameters, rk, theta_vec(k), phi_vec(k)).';
+        Btot = BDipole_Cartesian + BDisk_Cartesian;
+    end
     
     PressureDifference = norm(cross(n_Cartesian, Btot))*sqrt(1+beta) + (1/2)*dot(n_Cartesian,v_Cartesian);
     MeanPressure = (1/2) * (norm(cross(n_Cartesian, Btot))*sqrt(1+beta) - (1/2)*dot(n_Cartesian,v_Cartesian));

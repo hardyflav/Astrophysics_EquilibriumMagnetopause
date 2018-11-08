@@ -12,8 +12,8 @@ addpath(p)
 %% Grid Definition for Surface Optimisations
     ThetaMaxDeg = 120;                             % Maximum value of theta on the grid, degrees
     PhiMaxDeg = 90;                                % Maximum value of phi on the grid, degrees
-    DeltaThetaDeg = 2;
-    DeltaPhiDeg = 2;
+    DeltaThetaDeg = 1;
+    DeltaPhiDeg = 1;
     ThetaSpan = (0 : DeltaThetaDeg : (ThetaMaxDeg))*pi/180;
     PhiSpan = (0 : DeltaPhiDeg: PhiMaxDeg).*pi/180;
     [NbPointsGrid, NbPointsGridInside,      ...
@@ -23,7 +23,7 @@ addpath(p)
 
 %% Construction of the Initial Surface
     PlotsPossibilitiesInitial = ["CurveEquator", "CurveMeridianParts", "CurveMeridian", "SurfaceInitialTot", "SurfaceInitialTotFieldLines", "GridAnalysis", "GridWrapped", "GridWrappedFieldLines"];
-    Plots =["CurveEquator", "CurveMeridian", "GridWrapped"];
+    Plots =["GridWrapped"];
     [rSubSolarNose, rEquatorInterpolant, rMeridianInterpolant, ThetaCuspCurves, InitialSurfaceInterpolant] = InitialGuess(SystemParameters, ThetaMaxDeg, PhiMaxDeg, DeltaThetaDeg, DeltaPhiDeg, Plots);
 
     rEquator = rEquatorInterpolant(ThetaSpan).';
@@ -36,7 +36,7 @@ addpath(p)
 
 %% Cropping and Correcting the Initial Surface
     NumIterationsTop = 15;
-    NumIterationsBottom = 15;
+    NumIterationsBottom = 25;
     [SurfaceCorrected] = Correction(rSubSolarNose, DeltaThetaDeg, DeltaPhiDeg, ThetaCusp, ThetaMaxDeg, PhiMaxDeg, rEquator, rMeridian, SurfaceInitialTot, NumIterationsTop, NumIterationsBottom, SystemParameters);
 
     
