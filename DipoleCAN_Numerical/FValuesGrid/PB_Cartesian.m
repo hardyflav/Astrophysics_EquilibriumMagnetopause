@@ -1,4 +1,4 @@
-function [PB_Cartesian] = PB_Cartesian( k, r, rss, r_eq, r_mer, delta_theta_deg, delta_phi_deg, Max_deg_equ, Max_deg_phi_direction, beta, SystemParameters )
+function [PB_Cartesian] = PB_Cartesian( k, r, rss, r_eq, r_mer, delta_theta_deg, delta_phi_deg, Max_deg_equ, Max_deg_phi_direction, SystemParameters )
     
 
 %     M = SystemParameters.M;
