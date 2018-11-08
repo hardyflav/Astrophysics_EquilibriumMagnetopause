@@ -1,4 +1,4 @@
-function ConstructionSurfaceContours = ConstructionSurfaceContours(Array, theta_span, phi_span, Delta)
+function ConstructionSurfaceContours = ConstructionSurfaceContours(Array, theta_span, phi_span, Delta, SystemParameters)
 
 
 angles_x = arrayfun(@sin, theta_span(1:end) ).'*arrayfun(@cos,  phi_span(1:end) );
@@ -27,12 +27,8 @@ Z = Array .* angles_z;
 
 %% Planet and Magnetic Moment
 
-    Bp = 20000*10^(-9);     % Equatorial field, T
-    Rp = 60280*10^3;        % Planet radius, m
-    mu_0 = 4*pi*10^(-7);
-    Pswnpa = 0.02;
-    b0 = sqrt(2*mu_0*Pswnpa*10^(-9));   % Field scale
-    r0 = (2*Bp*Rp^3/b0)^(1/3);          % Distance scale
+    Rp = SystemParameters.Rp;        % Planet radius, m
+    r0 = SystemParameters.r0;          % Distance scale
 
     RpScaled = Rp/r0;
     [Xs, Ys, Zs] = sphere;

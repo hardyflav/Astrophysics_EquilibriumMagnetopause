@@ -1,4 +1,4 @@
-function ConstructionSurfaceWarp = ConstructionSurfaceWarp(Array, theta_span, phi_span, ImgRGB)
+function ConstructionSurfaceWarp = ConstructionSurfaceWarp(Array, theta_span, phi_span, ImgRGB, SystemParameters)
 
 
 
@@ -27,12 +27,8 @@ hold on
 
 %% Planet and Magnetic Moment
 
-    Bp = 20000*10^(-9);     % Equatorial field, T
-    Rp = 60280*10^3;        % Planet radius, m
-    mu_0 = 4*pi*10^(-7);
-    Pswnpa = 0.02;
-    b0 = sqrt(2*mu_0*Pswnpa*10^(-9));   % Field scale
-    r0 = (2*Bp*Rp^3/b0)^(1/3);          % Distance scale
+    Rp = SystemParameters.Rp;        % Planet radius, m
+    r0 = SystemParameters.r0;          % Distance scale
 
     RpScaled = Rp/r0;
     [Xs, Ys, Zs] = sphere;

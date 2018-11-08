@@ -12,8 +12,8 @@ addpath(p)
 %% Grid Definition for Surface Optimisations
     ThetaMaxDeg = 120;                             % Maximum value of theta on the grid, degrees
     PhiMaxDeg = 90;                                % Maximum value of phi on the grid, degrees
-    DeltaThetaDeg = 1;
-    DeltaPhiDeg = 1;
+    DeltaThetaDeg = 2;
+    DeltaPhiDeg = 2;
     ThetaSpan = (0 : DeltaThetaDeg : (ThetaMaxDeg))*pi/180;
     PhiSpan = (0 : DeltaPhiDeg: PhiMaxDeg).*pi/180;
     [NbPointsGrid, NbPointsGridInside,      ...

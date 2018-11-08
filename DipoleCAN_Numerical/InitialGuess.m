@@ -670,7 +670,7 @@ InitialSurface = InitialSurfaceInterpolant(PhiSpanGridInterpolant, ThetaSpanGrid
                  Z*(z2-z1)+z1, 'FaceAlpha', 0.5, 'LineStyle', 'none');
 
         Delta = 2;
-        ConstructionSurfaceContours(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, Delta)
+        ConstructionSurfaceContours(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, Delta, SystemParameters)
         set(gcf,'color','w');
         axis([-1.5, 1.5, -2.3, 2.3, -2.3, 2.3])
         box on 
@@ -765,7 +765,7 @@ InitialSurface = InitialSurfaceInterpolant(PhiSpanGridInterpolant, ThetaSpanGrid
                  Z*(z2-z1)+z1, 'FaceAlpha', 0.5, 'LineStyle', 'none');
 
         Delta = 2;
-        ConstructionSurfaceContours(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, Delta)
+        ConstructionSurfaceContours(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, Delta, SystemParameters)
         set(gcf,'color','w');
         axis([-1.5, 1.5, -2.3, 2.3, -2.3, 2.3])
         box on 
@@ -914,7 +914,7 @@ rMeridianGrid = rMeridianInterpolant(ThetaSpanGrid);
 
         % Surface
         ImgRGB = imread('ColourMap.png');
-        ConstructionSurfaceWarp(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, ImgRGB);
+        ConstructionSurfaceWarp(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, ImgRGB, SystemParameters);
         set(gcf,'color','w');
         view([45+3*90+5 30])
         axis([-2.3, 2.3, -2.3, 2.3, -2.3, 2.3])
@@ -1051,7 +1051,7 @@ rMeridianGrid = rMeridianInterpolant(ThetaSpanGrid);
 
             ImgRGB = imread('ColourMap.png');
             [ImRows, ImCols, ImPlanes] = size(ImgRGB);
-            ConstructionSurfaceWarp(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, ImgRGB)
+            ConstructionSurfaceWarp(InitialSurface.', ThetaSpanGrid, PhiSpanGrid, ImgRGB, SystemParameters)
             set(gcf,'color','w');
             colorbar('southoutside', 'YTickLabel', {'0.01', '', '0.1', '', '1', '', '10', '', '100'});
             caxis([-4 0])

@@ -93,7 +93,7 @@ if ismember("SurfaceCorrected", Plots)
         PhiSpanConcatenated = (0:DeltaPhiDeg:PhiMaxDeg)*pi/180;
         ThetaSpanConcatenated = (0:DeltaThetaDeg:ThetaMaxDeg)*pi/180;
         Delta = 2;
-        ConstructionSurfaceContours(SurfaceCorrected(1:1:end, 1:1:end).',ThetaSpanConcatenated(1:1:end), PhiSpanConcatenated(1:1:end), Delta)
+        ConstructionSurfaceContours(SurfaceCorrected(1:1:end, 1:1:end).',ThetaSpanConcatenated(1:1:end), PhiSpanConcatenated(1:1:end), Delta, SystemParameters)
        box on
        axis([-2.3 2.3 -2.3 2.3 -2.3 2.3])
        view(45+90, 30)
@@ -182,7 +182,7 @@ if ismember("SurfaceCorrectedFieldLines", Plots)
         PhiSpanConcatenated = (0:DeltaPhiDeg:PhiMaxDeg)*pi/180;
         ThetaSpanConcatenated = (0:DeltaThetaDeg:ThetaMaxDeg)*pi/180;
         Delta = 2;
-        ConstructionSurfaceContours(SurfaceCorrected(1:1:end, 1:1:end).',ThetaSpanConcatenated(1:1:end), PhiSpanConcatenated(1:1:end), Delta)
+        ConstructionSurfaceContours(SurfaceCorrected(1:1:end, 1:1:end).',ThetaSpanConcatenated(1:1:end), PhiSpanConcatenated(1:1:end), Delta, SystemParameters)
        box on
        axis([-2.3 2.3 -2.3 2.3 -2.3 2.3])
        view(45+90, 30)
@@ -199,7 +199,7 @@ end
 
 if ismember("GridWrapped", Plots)
     
-    Jump = 3;
+    Jump = 2;
     
     [NbPointsGrid, NbPointsGridInside,      ...
     NbPointsThetaInside, NbPointsPhiInside, ...
@@ -289,7 +289,7 @@ if ismember("GridWrapped", Plots)
 
             ImgRGB = imread('ColourMap.png');
             [ImRows, ImCols, ImPlanes] = size(ImgRGB);
-            ConstructionSurfaceWarp(SurfaceCorrected(:,Jump:Jump:end).', ThetaSpanConcatenated(Jump:Jump:end), PhiSpanConcatenated(1:1:end), ImgRGB)
+            ConstructionSurfaceWarp(SurfaceCorrected(:,Jump:Jump:end).', ThetaSpanConcatenated(Jump:Jump:end), PhiSpanConcatenated(1:1:end), ImgRGB, SystemParameters)
             set(gcf,'color','w');
             view([45+3*90+5 30])
             axis([-2.3, 2.3, -2.3, 2.3, -2.3, 2.3])
@@ -420,7 +420,7 @@ if ismember("GridWrappedFieldLines", Plots)
 
             ImgRGB = imread('ColourMap.png');
             [ImRows, ImCols, ImPlanes] = size(ImgRGB);
-            ConstructionSurfaceWarp(SurfaceCorrected(:,Jump:Jump:end).', ThetaSpanConcatenated(Jump:Jump:end), PhiSpanConcatenated(1:1:end), ImgRGB)
+            ConstructionSurfaceWarp(SurfaceCorrected(:,Jump:Jump:end).', ThetaSpanConcatenated(Jump:Jump:end), PhiSpanConcatenated(1:1:end), ImgRGB, SystemParameters)
             set(gcf,'color','w');
             view([45+3*90+5 30])
             axis([-2.3, 2.3, -2.3, 2.3, -2.3, 2.3])
