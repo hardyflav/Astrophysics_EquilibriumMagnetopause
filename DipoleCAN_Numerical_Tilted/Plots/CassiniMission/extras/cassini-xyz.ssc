@@ -1,0 +1,8 @@
+"Cassini xyz" "Sol"
+{
+Class "spacecraft"
+Mesh "galileo.3ds"
+Radius 0.01
+Albedo 0.7
+SampledOrbit "cassini.xyz" 
+}

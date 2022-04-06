@@ -1,0 +1,33 @@
+# This file contains the orbital elements in Celestia's SSC format.
+# for the Cassini-Huygens Saturn probe.
+#
+# The information was obtained from 
+# NASA's Horizons ephemeris service
+#
+# by Selden Ball seb+cel@lns.cornell.edu 
+#
+#2450828.500000000 = A.D. 1998-Jan-15 00:00:00.0000 (CT)
+# EC= 2.007666188805987E-01 QR= 6.731515994611313E-01 I= 1.237334060304906E+00
+# OM= 2.181679124674156E+01 W = 1.992521826265248E+02 Tp= 2.450899800391805E+06
+# N = 1.275102721303941E+00 MA= 2.690846763793782E+02 TA=-1.132485718951443E+02
+# A = 8.422466020104409E-01 AD= 1.011341604559750E+00 PR= 2.823301950386068E+02
+"Cassini 1998-01-15" "Sol"
+{
+	Class "spacecraft"
+	Mesh "galileo.3ds"
+	Radius 0.01
+	Beginning	2450736.50
+	Ending		2450929.50
+	EllipticalOrbit
+ 	{
+		Period            0.7729633
+		SemiMajorAxis     0.842246602
+		Eccentricity      0.200766618
+		Inclination       1.23733406
+		AscendingNode    21.8167912
+		ArgOfPericenter 199.252182
+                MeanAnomaly     269.084676
+		Epoch       2450828.50
+	}
+        Albedo            0.7
+}

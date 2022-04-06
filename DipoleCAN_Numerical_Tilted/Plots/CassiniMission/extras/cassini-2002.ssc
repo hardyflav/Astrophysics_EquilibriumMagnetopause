@@ -1,0 +1,26 @@
+# This file contains the orbital elements in Celestia's SSC format.
+# for the Cassini probe
+#
+# The orbital elements were obtained from 
+# Horizons Ephemeris System <horizons@ssd.jpl.nasa.gov>
+#
+# by Selden Ball seb+cel@lns.cornell.edu 
+#
+"Cassini 2002-10-10" "Sol"
+{
+	Class "spacecraft"
+	Mesh "galileo.3ds"
+	Radius 0.01
+	EllipticalOrbit
+	{
+		Period           12.44131
+		SemiMajorAxis     5.36921504
+		Eccentricity      0.728031108
+		Inclination       0.821640702
+		AscendingNode   127.187606
+		ArgOfPericenter 167.738633
+                MeanAnomaly      94.9254870
+		Epoch       2452557.50
+	}
+        Albedo            0.5
+}

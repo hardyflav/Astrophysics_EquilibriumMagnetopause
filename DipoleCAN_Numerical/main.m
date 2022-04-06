@@ -1,6 +1,6 @@
 clear all;
 clc;
-p = genpath('/Users/flavien/Documents/Github/EquilibriumMagnetopause/DipoleCAN_Numerical');
+p = genpath('/Users/flavien/Documents/Projects/ResearchPhysics/Github/EquilibriumMagnetopause/DipoleCAN_Numerical')
 addpath(p)
 
 
@@ -23,7 +23,7 @@ addpath(p)
 
 %% Construction of the Initial Surface
     PlotsPossibilitiesInitial = ["CurveEquator", "CurveMeridianParts", "CurveMeridian", "SurfaceInitialTot", "SurfaceInitialTotFieldLines", "GridAnalysis", "GridWrapped", "GridWrappedFieldLines"];
-    Plots =["GridWrapped"];
+    Plots = ["GridWrapped"];
     [rSubSolarNose, rEquatorInterpolant, rMeridianInterpolant, ThetaCuspCurves, InitialSurfaceInterpolant] = InitialGuess(SystemParameters, ThetaMaxDeg, PhiMaxDeg, DeltaThetaDeg, DeltaPhiDeg, Plots);
 
     rEquator = rEquatorInterpolant(ThetaSpan).';
@@ -40,9 +40,9 @@ addpath(p)
     [SurfaceCorrected] = Correction(rSubSolarNose, DeltaThetaDeg, DeltaPhiDeg, ThetaCusp, ThetaMaxDeg, PhiMaxDeg, rEquator, rMeridian, SurfaceInitialTot, NumIterationsTop, NumIterationsBottom, SystemParameters);
 
     
-%% Ploting the Results
+%% Plotting the Results
     PlotsPossibilitiesCorrection= ["SurfaceCorrected", "SurfaceCorrectedFieldLines", "GridWrapped", "GridWrappedFieldLines"];
-    PlotsCorrection = ["GridWrapped"];
+    PlotsCorrection = ["SurfaceCorrected", "SurfaceCorrectedFieldLines", "GridWrapped"];
     CorrectionPlot(PlotsCorrection, DeltaThetaDeg, DeltaPhiDeg, ThetaMaxDeg, PhiMaxDeg, rSubSolarNose, SurfaceCorrected, SystemParameters)
 
     

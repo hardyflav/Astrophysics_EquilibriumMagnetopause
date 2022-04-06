@@ -382,10 +382,10 @@ if ismember("CurveEquator", Plots)
         text(0.53+0.45, 0.35+0.43, PositionR, 'Interpreter','latex', 'FontSize', 22, 'FontWeight', 'bold', 'FontName', 'Helvetica', 'color', c_Position);
 	
         % Optional: Add dipolar solution
-        load("/Users/flavien/Documents/UCL/Publications/2- GRL - Noon-Midnight Meridian Plane/Figures/DipoleEquatorMeridian.mat");
-        [YeqDipole, ZeqDipole] = pol2cart(ThetaAxis, rDipoleEquator);
-        EquatorialDipoleSolution_Color = [0.8500    0.6000    0.4000];
-        EquatorialDipoleSolution = plot(YeqDipole, ZeqDipole, 'LineWidth', 2, 'LineStyle', '-.', 'Color', EquatorialDipoleSolution_Color);    
+%         load("/Users/flavien/Documents/UCL/Publications/2- GRL - Noon-Midnight Meridian Plane/Figures/DipoleEquatorMeridian.mat");
+%         [YeqDipole, ZeqDipole] = pol2cart(ThetaAxis, rDipoleEquator);
+%         EquatorialDipoleSolution_Color = [0.8500    0.6000    0.4000];
+%         EquatorialDipoleSolution = plot(YeqDipole, ZeqDipole, 'LineWidth', 2, 'LineStyle', '-.', 'Color', EquatorialDipoleSolution_Color);    
 
     hold off
     

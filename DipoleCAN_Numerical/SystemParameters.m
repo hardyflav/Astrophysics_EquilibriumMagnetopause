@@ -3,8 +3,8 @@ function SystemParameters = SystemParameters(Planet)
     if Planet == "Saturn"
 
         % Planet and Pressure Balance at SATURN
-    	  SystemParameters.beta = 2;             % Plasma Beta (particle pressure / magnetic pressure)
-    	  SystemParameters.Bp = 20000*10^(-9);   % Equatorial field, T
+    	SystemParameters.beta = 2;             % Plasma Beta (particle pressure / magnetic pressure)
+    	SystemParameters.Bp = 20000*10^(-9);   % Equatorial field, T
         SystemParameters.Rp = 60280*10^3;      % Planet radius, m
         mu0 = 4*pi*10^(-7);
         Pswnpa = 0.02;

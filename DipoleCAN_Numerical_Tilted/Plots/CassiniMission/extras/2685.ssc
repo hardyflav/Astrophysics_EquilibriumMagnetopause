@@ -1,0 +1,30 @@
+# This file contains the orbital elements in Celestia's SSC format.
+# for 2685 Masursky ( = 1981 JN ) on 23-Jan-2000 when seen by Cassini
+#
+# The orbital elements were obtained from Horizon's telnet service
+# by Selden Ball seb+cel@lns.cornell.edu 
+#
+#2451566.500000000 = A.D. 2000-Jan-23 00:00:00.0000 (CT)
+# EC= 1.113735525591736E-01 QR= 2.283999017601624E+00 I= 1.213356793066003E+01
+# OM= 2.154673689801105E+02 W = 2.882462723664436E+02 Tp= 2.451955640199811E+06
+# N = 2.391878178514757E-01 MA= 2.669224047688190E+02 TA=-1.056261413490522E+02
+# A = 2.570257754739756E+00 AD= 2.856516491877888E+00 PR= 1.505093374878912E+03
+"2685 Masursky" "Sol"
+{
+	Class "moon"   # to show orbit even when not selected
+	Mesh "asteroid.cms"
+        Texture "asteroid.jpg"
+	Radius 8.0
+	EllipticalOrbit
+	{
+		Period            4.120643
+		SemiMajorAxis     2.57025775
+		Eccentricity      0.111373552
+		Inclination      12.1335679
+		AscendingNode   215.467368
+		ArgOfPericenter 288.246272
+                MeanAnomaly     266.922404
+		Epoch       2451566.50
+	}
+        Albedo            0.2 # guess: typical for "s-type"
+}

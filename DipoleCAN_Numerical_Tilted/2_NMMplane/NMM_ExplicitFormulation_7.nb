@@ -1,0 +1,773 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     32567,        765]
+NotebookOptionsPosition[     31536,        741]
+NotebookOutlinePosition[     31873,        756]
+CellTagsIndexPosition[     31830,        753]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "\"\<Global'*\>\"", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"D2R", " ", "=", " ", 
+   RowBox[{"Pi", "/", "180"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"R2D", " ", "=", " ", 
+   RowBox[{"180", "/", "Pi"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "ToMatlab.m"}], "\[IndentingNewLine]"}], "Input",
+ CellLabel->"In[1]:=",ExpressionUUID->"0fac921d-a129-4891-81f7-a8f716f4fa3b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"--", 
+    RowBox[{"--", 
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "--"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]\
+}]}]}]}]}]}]}]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"SETTING", " ", "UP", " ", "MAIN", " ", "VECTORS"}], ",", " ", 
+    RowBox[{"CARTESIAN", " ", "B", " ", "FIELD"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{
+   StyleBox["(*",
+    FontSize->14], 
+   StyleBox[" ",
+    FontSize->14], 
+   RowBox[{"MATRICES", ",", " ", 
+    RowBox[{"COORDINATE", " ", "CHANGE"}]}], 
+   StyleBox[" ",
+    FontSize->14], 
+   StyleBox["*)",
+    FontSize->14]}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"MCartToSph", " ", "=", " ", 
+     RowBox[{"{", " ", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Sin", "[", "theta", "]"}], "*", 
+          RowBox[{"Cos", "[", "phi", "]"}]}], ",", "  ", 
+         RowBox[{
+          RowBox[{"Sin", "[", "theta", "]"}], "*", 
+          RowBox[{"Sin", "[", "phi", "]"}]}], ",", " ", 
+         RowBox[{"Cos", "[", "theta", "]"}]}], " ", "}"}], ",", 
+       "\[IndentingNewLine]", "\t\t\t", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Cos", "[", "theta", "]"}], "*", 
+          RowBox[{"Cos", "[", "phi", "]"}]}], " ", ",", " ", 
+         RowBox[{
+          RowBox[{"Cos", "[", "theta", "]"}], "*", 
+          RowBox[{"Sin", "[", "phi", "]"}]}], ",", " ", 
+         RowBox[{"-", 
+          RowBox[{"Sin", "[", "theta", "]"}]}]}], "}"}], ",", 
+       "\[IndentingNewLine]", "\t\t         ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"Sin", "[", "phi", "]"}]}], ",", 
+         "                          ", 
+         RowBox[{"Cos", "[", "phi", "]"}], ",", 
+         "                            ", "0"}], "                      ", 
+        "}"}]}], "\[IndentingNewLine]", "\t\t       ", "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"MSphToCart", " ", "=", " ", 
+     RowBox[{
+      RowBox[{"Inverse", "[", "MCartToSph", "]"}], "//", "Simplify"}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    StyleBox["(*",
+     FontSize->14], 
+    StyleBox[" ",
+     FontSize->14], 
+    RowBox[{
+     RowBox[{"MAGNETIC", " ", "FIELD"}], ",", " ", "KSM"}], 
+    StyleBox[" ",
+     FontSize->14], 
+    StyleBox["*)",
+     FontSize->14]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"BfieldKSM", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"Bx", ",", " ", "By", ",", " ", "Bz"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"BfieldMB", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"BfieldKSM", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+       RowBox[{"BfieldKSM", "[", 
+        RowBox[{"[", "3", "]"}], "]"}], ",", " ", 
+       RowBox[{"BfieldKSM", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"BfieldSpherical", " ", "=", " ", 
+     RowBox[{"MCartToSph", ".", "BfieldMB"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    StyleBox["(*",
+     FontSize->14], 
+    StyleBox[" ",
+     FontSize->14], 
+    RowBox[{
+     RowBox[{"SOLAR", " ", "WIND"}], ",", " ", "KSM"}], 
+    StyleBox[" ",
+     FontSize->14], 
+    StyleBox["*)",
+     FontSize->14]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"VswKSM", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", " ", "0", ",", " ", "0"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"VswMB", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"VswKSM", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+       RowBox[{"VswKSM", "[", 
+        RowBox[{"[", "3", "]"}], "]"}], ",", " ", 
+       RowBox[{"VswKSM", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"VswSpherical", " ", "=", " ", 
+     RowBox[{"MCartToSph", ".", "VswMB"}]}], ";"}], "\[IndentingNewLine]", 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->18], 
+   RowBox[{
+    StyleBox["(*",
+     FontSize->14], 
+    StyleBox[" ",
+     FontSize->14], 
+    RowBox[{
+     StyleBox[
+      RowBox[{"NORMAL", " ", 
+       RowBox[{"VECTOR", ":", " ", "SPHERICAL"}]}],
+      FontSize->14], 
+     StyleBox[",",
+      FontSize->14], 
+     StyleBox[" ",
+      FontSize->14], 
+     RowBox[{
+      StyleBox["NOSE",
+       FontSize->14], 
+      StyleBox[" ",
+       FontSize->14], 
+      StyleBox["\[Rule]",
+       FontSize->14], " ", "KSM"}]}], 
+    StyleBox[" ",
+     FontSize->14], 
+    StyleBox["*)",
+     FontSize->14]}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->18], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"NvecSph", " ", "=", " ", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", " ", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"(", 
+           RowBox[{"1", "/", "r"}], ")"}]}], " ", "drdtheta"}], ",", " ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "1"}], "/", 
+          RowBox[{"(", 
+           RowBox[{"r", " ", 
+            RowBox[{"Sin", "[", "theta", "]"}]}], ")"}]}], " ", "drdphi"}]}], 
+       "}"}]}], ";"}],
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   RowBox[{
+    RowBox[{"NvecCartNoseMB", " ", "=", " ", 
+     RowBox[{"MSphToCart", ".", "NvecSph"}]}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   RowBox[{
+    RowBox[{"NvecCartNose", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NvecCartNoseMB", "[", 
+        RowBox[{"[", "3", "]"}], "]"}], ",", " ", 
+       RowBox[{"NvecCartNoseMB", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], ",", 
+       RowBox[{"NvecCartNoseMB", "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"MTilted", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"MTiltedX", ",", " ", "MTiltedY", ",", " ", "MTiltedZ"}], 
+      "}"}]}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   RowBox[{
+    RowBox[{"exNose", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"exNoseX", ",", " ", "exNoseY", ",", " ", "exNoseZ"}], "}"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   StyleBox[
+    RowBox[{
+     RowBox[{"ezNoseTemp", " ", "=", " ", 
+      RowBox[{"-", 
+       RowBox[{"(", 
+        RowBox[{"MTilted", " ", "-", " ", 
+         RowBox[{
+          RowBox[{"Dot", "[", 
+           RowBox[{"exNose", ",", " ", "MTilted"}], "]"}], " ", "*", " ", 
+          "exNose"}]}], ")"}]}]}], ";"}],
+    FontSize->14], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ezNose", "=", " ", 
+     RowBox[{"ezNoseTemp", " ", "/", " ", 
+      RowBox[{"Norm", "[", "ezNoseTemp", "]"}]}]}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   RowBox[{
+    RowBox[{
+     StyleBox["eyNose",
+      FontSize->14], 
+     StyleBox[" ",
+      FontSize->14], 
+     StyleBox["=",
+      FontSize->14], 
+     StyleBox[" ",
+      FontSize->14], 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Cross", "[", 
+        RowBox[{"ezNose", ",", " ", "exNose"}], "]"}], "//", 
+       "ComplexExpand"}], "//", "Simplify"}]}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   RowBox[{
+    RowBox[{
+     StyleBox["PCartNoseToKSM",
+      FontSize->14], 
+     StyleBox[" ",
+      FontSize->14], 
+     StyleBox["=",
+      FontSize->14], 
+     StyleBox[" ",
+      FontSize->14], 
+     RowBox[{
+      RowBox[{
+       StyleBox[
+        RowBox[{"Transpose", "[", 
+         RowBox[{"{", 
+          RowBox[{"exNose", ",", " ", "eyNose", ",", " ", "ezNose"}], "}"}], 
+         "]"}],
+        FontSize->14], "//", "ComplexExpand"}], "//", "Simplify"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   StyleBox[
+    RowBox[{
+     RowBox[{"PCartNoseToKSM", " ", "=", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"P11", ",", " ", "P12", ",", " ", "P13"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"P21", ",", " ", "P22", ",", " ", "P23"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"P31", ",", " ", "P32", ",", " ", "P33"}], "}"}]}], "}"}]}], 
+     ";"}],
+    FontSize->14], "\[IndentingNewLine]", 
+   StyleBox[
+    RowBox[{
+     RowBox[{"nKSM", " ", "=", " ", 
+      RowBox[{"PCartNoseToKSM", ".", "NvecCartNose"}]}], ";"}],
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   RowBox[{
+    StyleBox["(*",
+     FontSize->14], 
+    StyleBox[" ",
+     FontSize->14], 
+    RowBox[{
+     RowBox[{"PRESSURE", " ", "BALANCE"}], ",", " ", "KSM"}], 
+    StyleBox[" ",
+     FontSize->14], 
+    StyleBox["*)",
+     FontSize->14]}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"Psw", " ", "=", " ", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"(", 
+         RowBox[{"1", "/", "2"}], ")"}]}], "*", 
+       RowBox[{"Dot", "[", 
+        RowBox[{"nKSM", ",", "VswKSM"}], "]"}]}]}], ";"}],
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"Pmag", " ", "=", " ", 
+      RowBox[{"Norm", "[", 
+       RowBox[{"Cross", "[", 
+        RowBox[{"nKSM", ",", " ", "BfieldKSM"}], "]"}], "]"}]}], " ", ";"}],
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"Pdiff", " ", "=", " ", 
+      RowBox[{"Psw", "-", "Pmag"}]}], ";"}],
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"Pmean", " ", "=", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "/", "2"}], ")"}], "*", 
+       RowBox[{"(", 
+        RowBox[{"Psw", "+", "Pmag"}], ")"}]}]}], ";"}],
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   RowBox[{
+    RowBox[{
+     StyleBox["PB",
+      FontSize->14], 
+     StyleBox[" ",
+      FontSize->14], 
+     StyleBox["=",
+      FontSize->14], 
+     StyleBox[" ",
+      FontSize->14], 
+     RowBox[{
+      StyleBox["Pdiff",
+       FontSize->14], 
+      StyleBox["//",
+       FontSize->14], "ComplexExpand"}]}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->14]}]}]], "Input",
+ CellChangeTimes->{{3.800961736167005*^9, 3.800961789759762*^9}, {
+   3.800961823365197*^9, 3.8009619802037373`*^9}, {3.8009620358611717`*^9, 
+   3.800962043879086*^9}, {3.800962116804903*^9, 3.800962495718972*^9}, {
+   3.800962557862364*^9, 3.8009625923147*^9}, {3.800962632657071*^9, 
+   3.800962774643465*^9}, 3.800962976206991*^9, {3.8009660733415318`*^9, 
+   3.800966092534992*^9}, {3.800966158344552*^9, 3.800966165815696*^9}, {
+   3.800966208769326*^9, 3.8009662134969997`*^9}, {3.800966273679895*^9, 
+   3.800966333268572*^9}, 3.800966570316128*^9, 3.800967242879326*^9, {
+   3.801044388128148*^9, 3.8010443953494453`*^9}, {3.801044444135868*^9, 
+   3.801044481542232*^9}, {3.8010445527145557`*^9, 3.801044562490347*^9}, 
+   3.801213020409522*^9},
+ CellLabel->"In[5]:=",ExpressionUUID->"79bb19b7-26c2-43e3-a897-287ffe4ab91a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"--", 
+    RowBox[{"--", 
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "--"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]\
+}]}]}]}]}]}]}]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"NMM", " ", "PLANE"}], ",", " ", 
+    RowBox[{"GENERAL", " ", "CASE"}]}], " ", "*)"}]}]], "Input",
+ CellChangeTimes->{{3.8009627908092537`*^9, 
+  3.8009627942166233`*^9}},ExpressionUUID->"78b62c9d-ea0e-42d1-916e-\
+ab11943efb1e"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"PBNMM", " ", "=", " ", 
+   RowBox[{"PB", "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"phi", "\[Rule]", 
+       RowBox[{"Pi", "/", "2"}]}], ",", " ", 
+      RowBox[{"drdphi", "\[Rule]", "0"}]}], "}"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"PBNMM", "\[Equal]", "0"}], ",", " ", "drdtheta"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"drdtheta1", ",", " ", "drdtheta2"}], "}"}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"drdtheta", ",", " ", "drdtheta"}], "}"}], "/.", 
+    RowBox[{"Solve", "[", 
+     RowBox[{
+      RowBox[{"PBNMM", "\[Equal]", "0"}], ",", " ", "drdtheta"}], "]"}]}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.800962777833191*^9, 3.800962859964346*^9}, {
+   3.800962893412812*^9, 3.800962958706953*^9}, {3.8009629954389963`*^9, 
+   3.800962999547433*^9}, {3.8009661516363688`*^9, 3.800966186003097*^9}, {
+   3.8009662203624153`*^9, 3.800966224144256*^9}, {3.8009663788014402`*^9, 
+   3.8009664086692257`*^9}, 3.800966577198138*^9, {3.801044511003352*^9, 
+   3.8010445399623003`*^9}, 3.801044587541623*^9},
+ CellLabel->
+  "In[168]:=",ExpressionUUID->"29332343-e8ab-4157-a5b5-e2b88236be2c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"drdtheta1", "//", "Simplify"}], "//", "ToMatlab"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"drdtheta2", "//", "Simplify"}], "//", "ToMatlab"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.800962777833191*^9, 3.800962859964346*^9}, {
+   3.800962893412812*^9, 3.800962958706953*^9}, {3.8009629954389963`*^9, 
+   3.8009630432704372`*^9}, {3.800964013985297*^9, 3.800964019597002*^9}, {
+   3.800965413530414*^9, 3.80096542361726*^9}, 3.800965461105126*^9, {
+   3.800966137223813*^9, 3.8009661376143723`*^9}, {3.800966361679109*^9, 
+   3.8009663759175663`*^9}, 3.800966428056838*^9, {3.800966601999279*^9, 
+   3.8009666032837887`*^9}, {3.80096727952711*^9, 3.800967280840063*^9}, {
+   3.801044620301869*^9, 3.801044621569935*^9}},
+ CellLabel->
+  "In[173]:=",ExpressionUUID->"de15aa7f-e1b5-45e0-8bf2-dbbeb22ce711"],
+
+Cell[BoxData["\<\"[(P11.^2+(-4).*By.^2.*P11.^2+(-4).*Bz.^2.*P11.^2+P13.^2+(-4)\
+.* ...\\n  By.^2.*P13.^2+(-4).*Bz.^2.*P13.^2+8.*Bx.*By.*P11.*P21+(-4).* \
+...\\n  Bx.^2.*P21.^2+(-4).*Bz.^2.*P21.^2+8.*Bx.*By.*P13.*P23+(-4).* ...\\n  \
+Bx.^2.*P23.^2+(-4).*Bz.^2.*P23.^2+8.*Bx.*Bz.*P11.*P31+8.*By.*Bz.* ...\\n  \
+P21.*P31+(-4).*Bx.^2.*P31.^2+(-4).*By.^2.*P31.^2+8.*Bx.*Bz.*P13.* ...\\n  \
+P33+8.*By.*Bz.*P23.*P33+(-4).*Bx.^2.*P33.^2+(-4).*By.^2.*P33.^2+(( ...\\n  \
+(-1)+4.*By.^2+4.*Bz.^2).*P11.^2+(1+(-4).*By.^2+(-4).*Bz.^2).* ...\\n  \
+P13.^2+(-8).*Bx.*P11.*(By.*P21+Bz.*P31)+8.*Bx.*P13.*(By.*P23+Bz.* ...\\n  \
+P33)+4.*(Bz.^2.*(P21.^2+(-1).*P23.^2)+By.*Bz.*((-2).*P21.*P31+2.* ...\\n  \
+P23.*P33)+By.^2.*(P31.^2+(-1).*P33.^2)+Bx.^2.*(P21.^2+(-1).* ...\\n  \
+P23.^2+P31.^2+(-1).*P33.^2))).*cos(2.*theta)+((-8).*Bx.*P13.*(By.* ...\\n  \
+P21+Bz.*P31)+8.*(Bz.*P21+(-1).*By.*P31).*(Bz.*P23+(-1).*By.*P33)+( ...\\n  \
+-2).*P11.*(P13+(-4).*By.^2.*P13+(-4).*Bz.^2.*P13+4.*Bx.*By.*P23+ ...\\n  \
+4.*Bx.*Bz.*P33)+8.*Bx.^2.*(P21.*P23+P31.*P33)).*sin(2.*theta)).^( ...\\n  \
+-1).*((-4).*((-1).*(((-1)+4.*By.^2+4.*Bz.^2).*(Bz.*P13.*P21+(-1).* ...\\n  \
+Bz.*P11.*P23+(-1).*By.*P13.*P31+By.*P11.*P33).^2+4.*Bx.^4.*(P23.* ...\\n  \
+P31+(-1).*P21.*P33).^2+8.*Bx.*(By.^2+Bz.^2).*((-1).*Bz.*P13.*P21+ ...\\n  \
+Bz.*P11.*P23+By.*P13.*P31+(-1).*By.*P11.*P33).*((-1).*P23.*P31+ ...\\n  \
+P21.*P33)+(-8).*Bx.^3.*(Bz.*P13.*P21+(-1).*Bz.*P11.*P23+(-1).*By.* ...\\n  \
+P13.*P31+By.*P11.*P33).*((-1).*P23.*P31+P21.*P33)+Bx.^2.*(P13.^2.* ...\\n  \
+(((-1)+4.*Bz.^2).*P21.^2+(-8).*By.*Bz.*P21.*P31+((-1)+4.*By.^2).* ...\\n  \
+P31.^2)+4.*(By.^2+Bz.^2).*(P23.*P31+(-1).*P21.*P33).^2+P11.^2.*((( ...\\n  \
+-1)+4.*Bz.^2).*P23.^2+(-8).*By.*Bz.*P23.*P33+((-1)+4.*By.^2).* ...\\n  \
+P33.^2)+2.*P11.*P13.*(P31.*(4.*By.*Bz.*P23+P33+(-4).*By.^2.*P33)+ ...\\n  \
+P21.*(P23+(-4).*Bz.^2.*P23+4.*By.*Bz.*P33)))).*r.^2).^(1/2)+2.* ...\\n  \
+P11.*P13.*r.*cos(2.*theta)+(-8).*By.^2.*P11.*P13.*r.*cos(2.*theta) ...\\n  \
++(-8).*Bz.^2.*P11.*P13.*r.*cos(2.*theta)+8.*Bx.*By.*P13.*P21.*r.* ...\\n  \
+cos(2.*theta)+8.*Bx.*By.*P11.*P23.*r.*cos(2.*theta)+(-8).*Bx.^2.* ...\\n  \
+P21.*P23.*r.*cos(2.*theta)+(-8).*Bz.^2.*P21.*P23.*r.*cos(2.*theta) ...\\n  \
++8.*Bx.*Bz.*P13.*P31.*r.*cos(2.*theta)+8.*By.*Bz.*P23.*P31.*r.* ...\\n  \
+cos(2.*theta)+8.*Bx.*Bz.*P11.*P33.*r.*cos(2.*theta)+8.*By.*Bz.* ...\\n  \
+P21.*P33.*r.*cos(2.*theta)+(-8).*Bx.^2.*P31.*P33.*r.*cos(2.*theta) ...\\n  \
++(-8).*By.^2.*P31.*P33.*r.*cos(2.*theta)+(-1).*P11.^2.*r.*sin(2.* ...\\n  \
+theta)+4.*By.^2.*P11.^2.*r.*sin(2.*theta)+4.*Bz.^2.*P11.^2.*r.* ...\\n  \
+sin(2.*theta)+P13.^2.*r.*sin(2.*theta)+(-4).*By.^2.*P13.^2.*r.* ...\\n  \
+sin(2.*theta)+(-4).*Bz.^2.*P13.^2.*r.*sin(2.*theta)+(-8).*Bx.*By.* ...\\n  \
+P11.*P21.*r.*sin(2.*theta)+4.*Bx.^2.*P21.^2.*r.*sin(2.*theta)+4.* ...\\n  \
+Bz.^2.*P21.^2.*r.*sin(2.*theta)+8.*Bx.*By.*P13.*P23.*r.*sin(2.* ...\\n  \
+theta)+(-4).*Bx.^2.*P23.^2.*r.*sin(2.*theta)+(-4).*Bz.^2.*P23.^2.* ...\\n  \
+r.*sin(2.*theta)+(-8).*Bx.*Bz.*P11.*P31.*r.*sin(2.*theta)+(-8).* ...\\n  \
+By.*Bz.*P21.*P31.*r.*sin(2.*theta)+4.*Bx.^2.*P31.^2.*r.*sin(2.* ...\\n  \
+theta)+4.*By.^2.*P31.^2.*r.*sin(2.*theta)+8.*Bx.*Bz.*P13.*P33.*r.* ...\\n  \
+sin(2.*theta)+8.*By.*Bz.*P23.*P33.*r.*sin(2.*theta)+(-4).*Bx.^2.* ...\\n  \
+P33.^2.*r.*sin(2.*theta)+(-4).*By.^2.*P33.^2.*r.*sin(2.*theta)),( ...\\n  \
+P11.^2+(-4).*By.^2.*P11.^2+(-4).*Bz.^2.*P11.^2+P13.^2+(-4).* ...\\n  \
+By.^2.*P13.^2+(-4).*Bz.^2.*P13.^2+8.*Bx.*By.*P11.*P21+(-4).* ...\\n  \
+Bx.^2.*P21.^2+(-4).*Bz.^2.*P21.^2+8.*Bx.*By.*P13.*P23+(-4).* ...\\n  \
+Bx.^2.*P23.^2+(-4).*Bz.^2.*P23.^2+8.*Bx.*Bz.*P11.*P31+8.*By.*Bz.* ...\\n  \
+P21.*P31+(-4).*Bx.^2.*P31.^2+(-4).*By.^2.*P31.^2+8.*Bx.*Bz.*P13.* ...\\n  \
+P33+8.*By.*Bz.*P23.*P33+(-4).*Bx.^2.*P33.^2+(-4).*By.^2.*P33.^2+(( ...\\n  \
+(-1)+4.*By.^2+4.*Bz.^2).*P11.^2+(1+(-4).*By.^2+(-4).*Bz.^2).* ...\\n  \
+P13.^2+(-8).*Bx.*P11.*(By.*P21+Bz.*P31)+8.*Bx.*P13.*(By.*P23+Bz.* ...\\n  \
+P33)+4.*(Bz.^2.*(P21.^2+(-1).*P23.^2)+By.*Bz.*((-2).*P21.*P31+2.* ...\\n  \
+P23.*P33)+By.^2.*(P31.^2+(-1).*P33.^2)+Bx.^2.*(P21.^2+(-1).* ...\\n  \
+P23.^2+P31.^2+(-1).*P33.^2))).*cos(2.*theta)+((-8).*Bx.*P13.*(By.* ...\\n  \
+P21+Bz.*P31)+8.*(Bz.*P21+(-1).*By.*P31).*(Bz.*P23+(-1).*By.*P33)+( ...\\n  \
+-2).*P11.*(P13+(-4).*By.^2.*P13+(-4).*Bz.^2.*P13+4.*Bx.*By.*P23+ ...\\n  \
+4.*Bx.*Bz.*P33)+8.*Bx.^2.*(P21.*P23+P31.*P33)).*sin(2.*theta)).^( ...\\n  \
+-1).*((-4).*((-1).*(((-1)+4.*By.^2+4.*Bz.^2).*(Bz.*P13.*P21+(-1).* ...\\n  \
+Bz.*P11.*P23+(-1).*By.*P13.*P31+By.*P11.*P33).^2+4.*Bx.^4.*(P23.* ...\\n  \
+P31+(-1).*P21.*P33).^2+8.*Bx.*(By.^2+Bz.^2).*((-1).*Bz.*P13.*P21+ ...\\n  \
+Bz.*P11.*P23+By.*P13.*P31+(-1).*By.*P11.*P33).*((-1).*P23.*P31+ ...\\n  \
+P21.*P33)+(-8).*Bx.^3.*(Bz.*P13.*P21+(-1).*Bz.*P11.*P23+(-1).*By.* ...\\n  \
+P13.*P31+By.*P11.*P33).*((-1).*P23.*P31+P21.*P33)+Bx.^2.*(P13.^2.* ...\\n  \
+(((-1)+4.*Bz.^2).*P21.^2+(-8).*By.*Bz.*P21.*P31+((-1)+4.*By.^2).* ...\\n  \
+P31.^2)+4.*(By.^2+Bz.^2).*(P23.*P31+(-1).*P21.*P33).^2+P11.^2.*((( ...\\n  \
+-1)+4.*Bz.^2).*P23.^2+(-8).*By.*Bz.*P23.*P33+((-1)+4.*By.^2).* ...\\n  \
+P33.^2)+2.*P11.*P13.*(P31.*(4.*By.*Bz.*P23+P33+(-4).*By.^2.*P33)+ ...\\n  \
+P21.*(P23+(-4).*Bz.^2.*P23+4.*By.*Bz.*P33)))).*r.^2).^(1/2)+2.* ...\\n  \
+P11.*P13.*r.*cos(2.*theta)+(-8).*By.^2.*P11.*P13.*r.*cos(2.*theta) ...\\n  \
++(-8).*Bz.^2.*P11.*P13.*r.*cos(2.*theta)+8.*Bx.*By.*P13.*P21.*r.* ...\\n  \
+cos(2.*theta)+8.*Bx.*By.*P11.*P23.*r.*cos(2.*theta)+(-8).*Bx.^2.* ...\\n  \
+P21.*P23.*r.*cos(2.*theta)+(-8).*Bz.^2.*P21.*P23.*r.*cos(2.*theta) ...\\n  \
++8.*Bx.*Bz.*P13.*P31.*r.*cos(2.*theta)+8.*By.*Bz.*P23.*P31.*r.* ...\\n  \
+cos(2.*theta)+8.*Bx.*Bz.*P11.*P33.*r.*cos(2.*theta)+8.*By.*Bz.* ...\\n  \
+P21.*P33.*r.*cos(2.*theta)+(-8).*Bx.^2.*P31.*P33.*r.*cos(2.*theta) ...\\n  \
++(-8).*By.^2.*P31.*P33.*r.*cos(2.*theta)+(-1).*P11.^2.*r.*sin(2.* ...\\n  \
+theta)+4.*By.^2.*P11.^2.*r.*sin(2.*theta)+4.*Bz.^2.*P11.^2.*r.* ...\\n  \
+sin(2.*theta)+P13.^2.*r.*sin(2.*theta)+(-4).*By.^2.*P13.^2.*r.* ...\\n  \
+sin(2.*theta)+(-4).*Bz.^2.*P13.^2.*r.*sin(2.*theta)+(-8).*Bx.*By.* ...\\n  \
+P11.*P21.*r.*sin(2.*theta)+4.*Bx.^2.*P21.^2.*r.*sin(2.*theta)+4.* ...\\n  \
+Bz.^2.*P21.^2.*r.*sin(2.*theta)+8.*Bx.*By.*P13.*P23.*r.*sin(2.* ...\\n  \
+theta)+(-4).*Bx.^2.*P23.^2.*r.*sin(2.*theta)+(-4).*Bz.^2.*P23.^2.* ...\\n  \
+r.*sin(2.*theta)+(-8).*Bx.*Bz.*P11.*P31.*r.*sin(2.*theta)+(-8).* ...\\n  \
+By.*Bz.*P21.*P31.*r.*sin(2.*theta)+4.*Bx.^2.*P31.^2.*r.*sin(2.* ...\\n  \
+theta)+4.*By.^2.*P31.^2.*r.*sin(2.*theta)+8.*Bx.*Bz.*P13.*P33.*r.* ...\\n  \
+sin(2.*theta)+8.*By.*Bz.*P23.*P33.*r.*sin(2.*theta)+(-4).*Bx.^2.* ...\\n  \
+P33.^2.*r.*sin(2.*theta)+(-4).*By.^2.*P33.^2.*r.*sin(2.*theta))]; ...\\n  \\n\
+\"\>"], "Output",
+ CellChangeTimes->{{3.800966137988453*^9, 3.800966144920453*^9}, 
+   3.800966228518736*^9, {3.800966348096301*^9, 3.800966376311524*^9}, 
+   3.800966430280531*^9, 3.8009666054568367`*^9, 3.800967250758494*^9, 
+   3.8009672818182077`*^9, {3.8010445745739717`*^9, 3.801044621843358*^9}},
+ CellLabel->
+  "Out[174]=",ExpressionUUID->"bbecab91-b861-4255-9017-947302cd0ab1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.800965477520629*^9},
+ NumberMarks->False,ExpressionUUID->"6605fb52-7649-4c8c-9a29-c377ae77a970"],
+
+Cell[BoxData["\<\"[((-1).*P12.^2+4.*By.^2.*P12.^2+4.*Bz.^2.*P12.^2+(-1).*P13.^\
+2+4.* ...\\n  \
+By.^2.*P13.^2+4.*Bz.^2.*P13.^2+(-8).*Bx.*By.*P12.*P22+4.*Bx.^2.* ...\\n  \
+P22.^2+4.*Bz.^2.*P22.^2+(-8).*Bx.*By.*P13.*P23+4.*Bx.^2.*P23.^2+ ...\\n  \
+4.*Bz.^2.*P23.^2+(-8).*Bx.*Bz.*P12.*P32+(-8).*By.*Bz.*P22.*P32+4.* ...\\n  \
+Bx.^2.*P32.^2+4.*By.^2.*P32.^2+(-8).*Bx.*Bz.*P13.*P33+(-8).*By.* ...\\n  \
+Bz.*P23.*P33+4.*Bx.^2.*P33.^2+4.*By.^2.*P33.^2+(((-1)+4.*By.^2+4.* ...\\n  \
+Bz.^2).*P12.^2+(1+(-4).*By.^2+(-4).*Bz.^2).*P13.^2+(-8).*Bx.*P12.* ...\\n  \
+(By.*P22+Bz.*P32)+8.*Bx.*P13.*(By.*P23+Bz.*P33)+4.*(Bz.^2.*( ...\\n  \
+P22.^2+(-1).*P23.^2)+By.*Bz.*((-2).*P22.*P32+2.*P23.*P33)+By.^2.*( ...\\n  \
+P32.^2+(-1).*P33.^2)+Bx.^2.*(P22.^2+(-1).*P23.^2+P32.^2+(-1).* ...\\n  \
+P33.^2))).*cos(2.*theta)+(8.*Bx.*P13.*(By.*P22+Bz.*P32)+(-8).*( ...\\n  \
+Bz.*P22+(-1).*By.*P32).*(Bz.*P23+(-1).*By.*P33)+2.*P12.*(P13+(-4) ...\\n  \
+.*By.^2.*P13+(-4).*Bz.^2.*P13+4.*Bx.*By.*P23+4.*Bx.*Bz.*P33)+(-8) ...\\n  \
+.*Bx.^2.*(P22.*P23+P32.*P33)).*sin(2.*theta)).^(-1).*((-4).*((-1) ...\\n  \
+.*(((-1)+4.*By.^2+4.*Bz.^2).*(Bz.*P13.*P22+(-1).*Bz.*P12.*P23+(-1) ...\\n  \
+.*By.*P13.*P32+By.*P12.*P33).^2+4.*Bx.^4.*(P23.*P32+(-1).*P22.* ...\\n  \
+P33).^2+8.*Bx.*(By.^2+Bz.^2).*((-1).*Bz.*P13.*P22+Bz.*P12.*P23+ ...\\n  \
+By.*P13.*P32+(-1).*By.*P12.*P33).*((-1).*P23.*P32+P22.*P33)+(-8).* ...\\n  \
+Bx.^3.*(Bz.*P13.*P22+(-1).*Bz.*P12.*P23+(-1).*By.*P13.*P32+By.* ...\\n  \
+P12.*P33).*((-1).*P23.*P32+P22.*P33)+Bx.^2.*(P13.^2.*(((-1)+4.* ...\\n  \
+Bz.^2).*P22.^2+(-8).*By.*Bz.*P22.*P32+((-1)+4.*By.^2).*P32.^2)+4.* ...\\n  \
+(By.^2+Bz.^2).*(P23.*P32+(-1).*P22.*P33).^2+P12.^2.*(((-1)+4.* ...\\n  \
+Bz.^2).*P23.^2+(-8).*By.*Bz.*P23.*P33+((-1)+4.*By.^2).*P33.^2)+2.* ...\\n  \
+P12.*P13.*(P32.*(4.*By.*Bz.*P23+P33+(-4).*By.^2.*P33)+P22.*(P23+( ...\\n  \
+-4).*Bz.^2.*P23+4.*By.*Bz.*P33)))).*r.^2).^(1/2)+(-2).*P12.*P13.* ...\\n  \
+r.*cos(2.*theta)+8.*By.^2.*P12.*P13.*r.*cos(2.*theta)+8.*Bz.^2.* ...\\n  \
+P12.*P13.*r.*cos(2.*theta)+(-8).*Bx.*By.*P13.*P22.*r.*cos(2.* ...\\n  \
+theta)+(-8).*Bx.*By.*P12.*P23.*r.*cos(2.*theta)+8.*Bx.^2.*P22.* ...\\n  \
+P23.*r.*cos(2.*theta)+8.*Bz.^2.*P22.*P23.*r.*cos(2.*theta)+(-8).* ...\\n  \
+Bx.*Bz.*P13.*P32.*r.*cos(2.*theta)+(-8).*By.*Bz.*P23.*P32.*r.*cos( ...\\n  \
+2.*theta)+(-8).*Bx.*Bz.*P12.*P33.*r.*cos(2.*theta)+(-8).*By.*Bz.* ...\\n  \
+P22.*P33.*r.*cos(2.*theta)+8.*Bx.^2.*P32.*P33.*r.*cos(2.*theta)+ ...\\n  \
+8.*By.^2.*P32.*P33.*r.*cos(2.*theta)+(-1).*P12.^2.*r.*sin(2.* ...\\n  \
+theta)+4.*By.^2.*P12.^2.*r.*sin(2.*theta)+4.*Bz.^2.*P12.^2.*r.* ...\\n  \
+sin(2.*theta)+P13.^2.*r.*sin(2.*theta)+(-4).*By.^2.*P13.^2.*r.* ...\\n  \
+sin(2.*theta)+(-4).*Bz.^2.*P13.^2.*r.*sin(2.*theta)+(-8).*Bx.*By.* ...\\n  \
+P12.*P22.*r.*sin(2.*theta)+4.*Bx.^2.*P22.^2.*r.*sin(2.*theta)+4.* ...\\n  \
+Bz.^2.*P22.^2.*r.*sin(2.*theta)+8.*Bx.*By.*P13.*P23.*r.*sin(2.* ...\\n  \
+theta)+(-4).*Bx.^2.*P23.^2.*r.*sin(2.*theta)+(-4).*Bz.^2.*P23.^2.* ...\\n  \
+r.*sin(2.*theta)+(-8).*Bx.*Bz.*P12.*P32.*r.*sin(2.*theta)+(-8).* ...\\n  \
+By.*Bz.*P22.*P32.*r.*sin(2.*theta)+4.*Bx.^2.*P32.^2.*r.*sin(2.* ...\\n  \
+theta)+4.*By.^2.*P32.^2.*r.*sin(2.*theta)+8.*Bx.*Bz.*P13.*P33.*r.* ...\\n  \
+sin(2.*theta)+8.*By.*Bz.*P23.*P33.*r.*sin(2.*theta)+(-4).*Bx.^2.* ...\\n  \
+P33.^2.*r.*sin(2.*theta)+(-4).*By.^2.*P33.^2.*r.*sin(2.*theta)),(( ...\\n  \
+-1).*P12.^2+4.*By.^2.*P12.^2+4.*Bz.^2.*P12.^2+(-1).*P13.^2+4.* ...\\n  \
+By.^2.*P13.^2+4.*Bz.^2.*P13.^2+(-8).*Bx.*By.*P12.*P22+4.*Bx.^2.* ...\\n  \
+P22.^2+4.*Bz.^2.*P22.^2+(-8).*Bx.*By.*P13.*P23+4.*Bx.^2.*P23.^2+ ...\\n  \
+4.*Bz.^2.*P23.^2+(-8).*Bx.*Bz.*P12.*P32+(-8).*By.*Bz.*P22.*P32+4.* ...\\n  \
+Bx.^2.*P32.^2+4.*By.^2.*P32.^2+(-8).*Bx.*Bz.*P13.*P33+(-8).*By.* ...\\n  \
+Bz.*P23.*P33+4.*Bx.^2.*P33.^2+4.*By.^2.*P33.^2+(((-1)+4.*By.^2+4.* ...\\n  \
+Bz.^2).*P12.^2+(1+(-4).*By.^2+(-4).*Bz.^2).*P13.^2+(-8).*Bx.*P12.* ...\\n  \
+(By.*P22+Bz.*P32)+8.*Bx.*P13.*(By.*P23+Bz.*P33)+4.*(Bz.^2.*( ...\\n  \
+P22.^2+(-1).*P23.^2)+By.*Bz.*((-2).*P22.*P32+2.*P23.*P33)+By.^2.*( ...\\n  \
+P32.^2+(-1).*P33.^2)+Bx.^2.*(P22.^2+(-1).*P23.^2+P32.^2+(-1).* ...\\n  \
+P33.^2))).*cos(2.*theta)+(8.*Bx.*P13.*(By.*P22+Bz.*P32)+(-8).*( ...\\n  \
+Bz.*P22+(-1).*By.*P32).*(Bz.*P23+(-1).*By.*P33)+2.*P12.*(P13+(-4) ...\\n  \
+.*By.^2.*P13+(-4).*Bz.^2.*P13+4.*Bx.*By.*P23+4.*Bx.*Bz.*P33)+(-8) ...\\n  \
+.*Bx.^2.*(P22.*P23+P32.*P33)).*sin(2.*theta)).^(-1).*((-4).*((-1) ...\\n  \
+.*(((-1)+4.*By.^2+4.*Bz.^2).*(Bz.*P13.*P22+(-1).*Bz.*P12.*P23+(-1) ...\\n  \
+.*By.*P13.*P32+By.*P12.*P33).^2+4.*Bx.^4.*(P23.*P32+(-1).*P22.* ...\\n  \
+P33).^2+8.*Bx.*(By.^2+Bz.^2).*((-1).*Bz.*P13.*P22+Bz.*P12.*P23+ ...\\n  \
+By.*P13.*P32+(-1).*By.*P12.*P33).*((-1).*P23.*P32+P22.*P33)+(-8).* ...\\n  \
+Bx.^3.*(Bz.*P13.*P22+(-1).*Bz.*P12.*P23+(-1).*By.*P13.*P32+By.* ...\\n  \
+P12.*P33).*((-1).*P23.*P32+P22.*P33)+Bx.^2.*(P13.^2.*(((-1)+4.* ...\\n  \
+Bz.^2).*P22.^2+(-8).*By.*Bz.*P22.*P32+((-1)+4.*By.^2).*P32.^2)+4.* ...\\n  \
+(By.^2+Bz.^2).*(P23.*P32+(-1).*P22.*P33).^2+P12.^2.*(((-1)+4.* ...\\n  \
+Bz.^2).*P23.^2+(-8).*By.*Bz.*P23.*P33+((-1)+4.*By.^2).*P33.^2)+2.* ...\\n  \
+P12.*P13.*(P32.*(4.*By.*Bz.*P23+P33+(-4).*By.^2.*P33)+P22.*(P23+( ...\\n  \
+-4).*Bz.^2.*P23+4.*By.*Bz.*P33)))).*r.^2).^(1/2)+(-2).*P12.*P13.* ...\\n  \
+r.*cos(2.*theta)+8.*By.^2.*P12.*P13.*r.*cos(2.*theta)+8.*Bz.^2.* ...\\n  \
+P12.*P13.*r.*cos(2.*theta)+(-8).*Bx.*By.*P13.*P22.*r.*cos(2.* ...\\n  \
+theta)+(-8).*Bx.*By.*P12.*P23.*r.*cos(2.*theta)+8.*Bx.^2.*P22.* ...\\n  \
+P23.*r.*cos(2.*theta)+8.*Bz.^2.*P22.*P23.*r.*cos(2.*theta)+(-8).* ...\\n  \
+Bx.*Bz.*P13.*P32.*r.*cos(2.*theta)+(-8).*By.*Bz.*P23.*P32.*r.*cos( ...\\n  \
+2.*theta)+(-8).*Bx.*Bz.*P12.*P33.*r.*cos(2.*theta)+(-8).*By.*Bz.* ...\\n  \
+P22.*P33.*r.*cos(2.*theta)+8.*Bx.^2.*P32.*P33.*r.*cos(2.*theta)+ ...\\n  \
+8.*By.^2.*P32.*P33.*r.*cos(2.*theta)+(-1).*P12.^2.*r.*sin(2.* ...\\n  \
+theta)+4.*By.^2.*P12.^2.*r.*sin(2.*theta)+4.*Bz.^2.*P12.^2.*r.* ...\\n  \
+sin(2.*theta)+P13.^2.*r.*sin(2.*theta)+(-4).*By.^2.*P13.^2.*r.* ...\\n  \
+sin(2.*theta)+(-4).*Bz.^2.*P13.^2.*r.*sin(2.*theta)+(-8).*Bx.*By.* ...\\n  \
+P12.*P22.*r.*sin(2.*theta)+4.*Bx.^2.*P22.^2.*r.*sin(2.*theta)+4.* ...\\n  \
+Bz.^2.*P22.^2.*r.*sin(2.*theta)+8.*Bx.*By.*P13.*P23.*r.*sin(2.* ...\\n  \
+theta)+(-4).*Bx.^2.*P23.^2.*r.*sin(2.*theta)+(-4).*Bz.^2.*P23.^2.* ...\\n  \
+r.*sin(2.*theta)+(-8).*Bx.*Bz.*P12.*P32.*r.*sin(2.*theta)+(-8).* ...\\n  \
+By.*Bz.*P22.*P32.*r.*sin(2.*theta)+4.*Bx.^2.*P32.^2.*r.*sin(2.* ...\\n  \
+theta)+4.*By.^2.*P32.^2.*r.*sin(2.*theta)+8.*Bx.*Bz.*P13.*P33.*r.* ...\\n  \
+sin(2.*theta)+8.*By.*Bz.*P23.*P33.*r.*sin(2.*theta)+(-4).*Bx.^2.* ...\\n  \
+P33.^2.*r.*sin(2.*theta)+(-4).*By.^2.*P33.^2.*r.*sin(2.*theta))]; ...\\n  \\n\
+\"\>"], "Output",
+ CellChangeTimes->{3.8009654743342533`*^9},
+ CellLabel->
+  "Out[678]=",ExpressionUUID->"2b3278aa-3848-4795-8f63-144a791b32ea"]
+}, Open  ]]
+},
+WindowSize->{1920, 1035},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 445, 9, 115, "Input",ExpressionUUID->"0fac921d-a129-4891-81f7-a8f716f4fa3b"],
+Cell[1006, 31, 12565, 400, 957, "Input",ExpressionUUID->"79bb19b7-26c2-43e3-a897-287ffe4ab91a"],
+Cell[13574, 433, 1665, 50, 52, "Input",ExpressionUUID->"78b62c9d-ea0e-42d1-916e-ab11943efb1e"],
+Cell[15242, 485, 1279, 33, 73, "Input",ExpressionUUID->"29332343-e8ab-4157-a5b5-e2b88236be2c"],
+Cell[CellGroupData[{
+Cell[16546, 522, 967, 19, 115, "Input",ExpressionUUID->"de15aa7f-e1b5-45e0-8bf2-dbbeb22ce711"],
+Cell[17516, 543, 7033, 94, 1904, "Output",ExpressionUUID->"bbecab91-b861-4255-9017-947302cd0ab1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24586, 642, 144, 2, 30, "Input",ExpressionUUID->"6605fb52-7649-4c8c-9a29-c377ae77a970"],
+Cell[24733, 646, 6787, 92, 1904, "Output",ExpressionUUID->"2b3278aa-3848-4795-8f63-144a791b32ea"]
+}, Open  ]]
+}
+]
+*)
+
