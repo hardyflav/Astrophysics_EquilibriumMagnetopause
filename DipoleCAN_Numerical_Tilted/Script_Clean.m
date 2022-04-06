@@ -16,7 +16,7 @@
     % Set Up: Planet and Pressure Balance Parameters
 
         Planet = 'Saturn';
-        Conditions_PhiTilt_rMP_Psw = [ 0, 25, NaN ];
+        Conditions_PhiTilt_rMP_Psw = [ 70, 25, NaN ];
         ParaSystem = System_ini(Planet, Inclination, Conditions_PhiTilt_rMP_Psw);
         ParaSystem.BShielding.XVal = 0;
         ParaSystem.BShielding.YVal = 0;
@@ -194,8 +194,11 @@
 %     if  ParaSystem.OnOff_ShieldingField == 1
 %         ParaSystem.BShielding = ParaSystem.Bshielding_kp1;
 %     end
-    
+  
 
+
+% Commenting instructions for computation of shielding field
+%{
     
  %% Test Shielding Field   
  
@@ -851,7 +854,7 @@ S = [1; 1; 1]
     figure;
     hold on
     streamline( XGridVal, YGridVal, ZGridVal, U, V, W, XStart, YStart, ZStart )
-    
+%}    
     
     
 %% -------------------------------------------------------------------------------
@@ -871,7 +874,7 @@ S = [1; 1; 1]
     Y_KSM = P_CartNose2KSM(2,1) .* XNose + P_CartNose2KSM(2,2) .* YNose + P_CartNose2KSM(2,3) .* ZNose;
     Z_KSM = P_CartNose2KSM(3,1) .* XNose + P_CartNose2KSM(3,2) .* YNose + P_CartNose2KSM(3,3) .* ZNose;
     
-    figure;
+%     figure;
     hold on
     Surface = surf(X_KSM, Y_KSM, Z_KSM, X_KSM);
     XValue = 16;
