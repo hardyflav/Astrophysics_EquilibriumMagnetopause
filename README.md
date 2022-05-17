@@ -8,8 +8,7 @@ This repository contains instructions to find the position of an equilibrium mag
 
   - DipoleCAN_Numerical: the pressure balance considered is (SW dynamic pressure) = (Dipolar planetary magnetic pressure + Hot plasma pressure + CAN Disk equatorial currents); the numerical scheme makes use of an numerically-approximated Jacobian matrix. The code is complete and operational.
 
-Related publications:
-[Link to Google](https://www.google.com)
+## Related publications:
 
 [Magnetopause Compressibility at Saturn With Internal Drivers](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2019GL086438)
 Geophysical Research Letters
